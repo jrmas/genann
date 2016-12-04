@@ -2,10 +2,11 @@
 
 ANN with automatic hyper-parameter tunning using a genetic algorithm
 
-* [Download](https://github.com/jrmas/genann/archive/master.zip) or access the
+* [Download](https://github.com/jrmas/genann/files/629796/genann-0.1.tar.gz) or access the
   [repo](https://github.com/jrmas/genann.git) from GitHub.
 
-* You can learn how to install and use it following [this tutorial]().
+* You can learn how to install and use it following
+  [this tutorial](https://github.com/jrmas/genann/blob/master/tutorial.md).
 
 An artificial neural network is difficult to configure. To learn a model from a given dataset,
 ANNs require manual or automatic trial and error experimentation to find a near optimal topology
