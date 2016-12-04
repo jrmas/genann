@@ -38,5 +38,5 @@ and Windows.
 This project is a continuation of my degree thesis. You can access the
 [memoir in PDF](https://jrmas.github.io/public/genann_mem_uoc.pdf) (catalan language)
 or the [first release](http://hdl.handle.net/10609/53366) from the UOC repository, where you will
-find all the datasets and code to generate the examples and graphs of the memoir.
-
+find all the datasets and code to generate the examples and graphs of the memoir. Download
+[here the ZIP file](http://openaccess.uoc.edu/webapps/o2/bitstream/10609/53366/2/JordiMas_TFG_0616.zip).
