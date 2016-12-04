@@ -1,0 +1,22 @@
+useDynLib(genann, r_ann_train)
+useDynLib(genann, r_ann_predict)
+
+export(
+    ann,
+    gann
+)
+
+# ann method
+S3method(ann, default)
+S3method(ann, formula)
+S3method(predict, ann)
+S3method(summary, ann)
+S3method(print, ann)
+S3method(plot, ann)
+
+# gann method
+S3method(gann, default)
+S3method(gann, formula)
+S3method(summary, gann)
+S3method(print, gann)
+S3method(plot, gann)

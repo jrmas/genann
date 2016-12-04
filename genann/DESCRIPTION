@@ -1,0 +1,11 @@
+Package: genann
+Version: 0.1
+Date: 2016-06-01
+Title: Genetic Artificial Neural Network
+Description: ANN with automatic hyper-parameter tunning using a genetic algorithm.
+License: GPL-3
+LazyLoad: yes
+Author: Jordi Mas Mateo
+Maintainer: Jordi Mas Mateo <jordimas@uoc.edu>
+NeedsCompilation: yes
+SystemRequirements: C++11
