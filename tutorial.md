@@ -4,7 +4,7 @@
 This is a brief tutorial of how to use the R package. First you must start R in interactive mode,
 then install and load the package:
 
-```
+```R
 install.packages("genann-0.1.tar.gz", repos=NULL)
 library("genann")
 ```
@@ -17,11 +17,11 @@ instead. Donwload the
 As the goal is to see how the package works, a very simple synthetic dataset will be created, for
 the algorithms to run fast:
 
-```
+```R
 set.seed(2016)  # try to produce the same result, can be dependent
                 # on the system's random number generator
 
-  # generate a sythetic dataset with input near 0 and output in [0, 1]
+  # generate a synthetic dataset with input near 0 and output in [0, 1]
 data <- data.frame(x=seq(-2.5, 2.5, by=0.02))
 data$y <- exp(-data$x^2) + rnorm(length(data$x), sd=0.03)
 
@@ -37,8 +37,8 @@ data_gt <- data_train[1:87,]    # 50% for training the NN inside the GA
 data_gv <- data_train[88:175,]  # 50% for validating the NN inside the GA
 ```
 
-Now we want to use the **data_train** dataset to find a neural network model to make predictions.
-The **data_test** will be used to validate that the model can make good predictions, so it can't be
+Now we want to use the `data_train` dataset to find a neural network model to make predictions.
+The `data_test` will be used to validate that the model can make good predictions, so it can't be
 used to train the NN. To find a suitable NN, we need to answer the following questions:
 
 * How many layers must have the NN?
@@ -49,13 +49,13 @@ used to train the NN. To find a suitable NN, we need to answer the following que
 
 To answer these questions we need to try different configurations, by using manual research or some
 kind of automation. This package gives you a genetic algorithm to automate this research.
-To run it, exectue:
+To run it, execute:
 
-```
+```R
 evol <- gann(data_gt$x, data_gt$y, data_gv$x, data_gv$y, lact="sigmoid")
 ```
 
-With this dataset, the genetic algoritm run for several minutes, but when finished, it answers all
+With this dataset, the genetic algorithm run for several minutes, but when finished, it answers all
 the previous questions. GA ends with an output like the following, when the organisms of the final
 population are shown by rows, with their respective configurations and an score or fitness broken
 down into its three terms:
@@ -73,10 +73,10 @@ FINAL POPULATION
 ...
 ```
 
-The column **mse** is the mean squared error obtained with the GA's validation set, the column **np** is
+The column `mse` is the mean squared error obtained with the GA's validation set, the column `np` is
 the size of the MLP measured in the number of parameters (synaptic weights and biases), the column
-**ne** is the number of epochs required for the MLP training, the columns **fnp** and **fne** are both values
-multiplied by configurable factors. The column **fitness** is the sum **mse+fnp+fne**.
+`ne` is the number of epochs required for the MLP training, the columns `fnp` and `fne` are both values
+multiplied by configurable factors. The column `fitness` is the sum `mse+fnp+fne`.
 
 You can choose one of the best organism based on some preferences. 
 
@@ -86,12 +86,12 @@ of the GA or even one, can return configurations with very different MLPs and fi
 In these cases it is wrong to make an average of the best hyper-parameters. See section 4.4
 of the memoir for more information on this subject.
 
-The column titled **ann config** gives the MLP configuration, and it can be copied as such in the ann()
+The column titled `ann config` gives the MLP configuration, and it can be copied as such in the ann()
 function call, that trains the NN and returns the model. Alternatively you can use the result of
-the GA evolution saved in the **evol** object to retrieve the hyper-parameters of the best organism, as
+the GA evolution saved in the `evol` object to retrieve the hyper-parameters of the best organism, as
 is done following:
 
-```
+```R
 model <- ann(data_train$x, data_train$y, lact="sigmoid",
              tmse=evol$besttmse, lr=evol$bestlr, mo=evol$bestmo, hls=evol$besthls)
 ```
@@ -99,15 +99,15 @@ model <- ann(data_train$x, data_train$y, lact="sigmoid",
 Finally, with the model created, you can make predictions and check that the GA returned a valid
 MLP configuration for this dataset:
 
-```
+```R
 fitted <- predict(model, newdata=data_test$x)  # make predictions
 errors <- data_test$y - fitted                 # residuals
 print(sum(errors^2) / nrow(errors))            # mean squared error
 ```
 
-We see that the **data_test** MSE is 0.0025, very close to the value indicated by the genetic algorithm,
-which has worked with its own validation set. With the following command you can see some
-predictions:
+We see that the `data_test` MSE is 0.0025, very close to the value indicated by the genetic
+algorithm, which has worked with its own validation set. With the following command you can see
+some predictions:
 
 ```
 print(head(data.frame(x=data_test$x, y=data_test$y, y_estimat=fitted)))
@@ -123,7 +123,7 @@ print(head(data.frame(x=data_test$x, y=data_test$y, y_estimat=fitted)))
 
 You can also get some graphs:
 
-```
+```R
 plot(evol)                        # GA evolution
 plot(model)                       # MLP visualization
 plot(data_train$x, data_train$y)  # training data
