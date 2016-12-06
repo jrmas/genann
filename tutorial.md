@@ -57,7 +57,7 @@ evol <- gann(data_gt$x, data_gt$y, data_gv$x, data_gv$y, lact="sigmoid")
 
 With this dataset, the genetic algorithm run for several minutes, but when finished, it answers all
 the previous questions. GA ends with an output like the following, when the organisms of the final
-population are shown by rows, with their respective configurations and an score or fitness broken
+population are shown by rows, with their respective configurations and a score or fitness broken
 down into its three terms:
 
 ```
@@ -78,18 +78,24 @@ the size of the MLP measured in the number of parameters (synaptic weights and b
 `ne` is the number of epochs required for the MLP training, the columns `fnp` and `fne` are both values
 multiplied by configurable factors. The column `fitness` is the sum `mse+fnp+fne`.
 
-You can choose one of the best organism based on some preferences. 
+The column titled `ann config` gives the MLP configurations:
 
-Although in this example all organisms are similar, depending on the data, fitness can be a
-multimodal function, and then we will have different optimals. Consequently, different executions
-of the GA or even one, can return configurations with very different MLPs and fitness roughly equal.
-In these cases it is wrong to make an average of the best hyper-parameters. See section 4.4
-of the memoir for more information on this subject.
+* `tmse` is the target mean squared error, this is the MSE at wich the ANN training will stop to try to avoid overfitting.
+* `lr` is the learning rate and `mo` is the momentum.
+* `hls` are the hidden layer sizes, or number of neurons of each hidden layer. Remember that the
+   input size and the output layer are determined by the sizes of the input and otput data. In this
+   example both are 1 so we can plot the the data on 2D, but can have any size. 
+ 
+You can choose one of the best organism based on some preferences. Although in this example all
+organisms are similar, depending on the data, fitness can be a multimodal function, and then we
+will have different optimals. Consequently, different executions of the GA or even one, can return
+configurations with very different MLPs, but roughly equal fitness. In these cases it is wrong to
+make an average of the best hyperparameters. See section 4.4 of the memoir for more information
+on this subject.
 
-The column titled `ann config` gives the MLP configuration, and it can be copied as such in the ann()
-function call, that trains the NN and returns the model. Alternatively you can use the result of
-the GA evolution saved in the `evol` object to retrieve the hyper-parameters of the best organism, as
-is done following:
+The `ann config` can be copied as such in the ann() function call, that trains the NN and
+returns the model. Alternatively you can use the result of the GA evolution saved in the `evol`
+object to retrieve the hyper-parameters of the best organism, as is done following:
 
 ```R
 model <- ann(data_train$x, data_train$y, lact="sigmoid",
@@ -130,3 +136,5 @@ plot(data_train$x, data_train$y)  # training data
 plot(data_test$x, fitted)         # fitted data
 plot.ts(model$errors, log="y")    # MLP learning
 ```
+Also you can get some help typing `?ann` and `?gann`.
+
